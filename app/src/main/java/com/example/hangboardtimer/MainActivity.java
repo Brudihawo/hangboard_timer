@@ -13,6 +13,8 @@ import android.view.View;
 
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Button st_button;
     private TimerThread timer_thread;
+
+    public TextView current_task, current_time_left;
+    ProgressBar progress_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
         hang_picker = findViewById(R.id.hang_picker);
         iter_picker = findViewById(R.id.iterations_picker);
         st_button = findViewById(R.id.st_button);
+        current_task = findViewById(R.id.current_task);
+        current_time_left = findViewById(R.id.current_time_left);
+
+        progress_bar = findViewById(R.id.progress_bar);
 
         pause_picker.setMinValue(0);
         pause_picker.setMaxValue(10);
@@ -69,11 +78,17 @@ public class MainActivity extends AppCompatActivity {
                     st_button.setText("Start");
                     timer_thread.interrupt();
                     running = false;
+                    for (NumberPicker p : new NumberPicker[]{hang_picker, rest_picker, pause_picker, iter_picker}) {
+                        p.setEnabled(true);
+                    }
                 } else {
                     st_button.setText("Stop");
-                    timer_thread = new TimerThread(hang_picker, rest_picker, pause_picker, iter_picker);
+                    timer_thread = new TimerThread(hang_picker, rest_picker, pause_picker, iter_picker, progress_bar, current_task, current_time_left);
                     timer_thread.start();
                     running = true;
+                    for (NumberPicker p : new NumberPicker[]{hang_picker, rest_picker, pause_picker, iter_picker}) {
+                        p.setEnabled(false);
+                    }
                 }
             }
         });

@@ -22,4 +22,10 @@
     <style name="Theme.HangboardTimer.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.HangboardTimer.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.NumPicker" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textFontWeight"><![CDATA[20]]></item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

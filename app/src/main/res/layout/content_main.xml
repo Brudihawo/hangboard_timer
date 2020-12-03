@@ -11,6 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#636363"
         android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Pause (min)"
+            android:text="@string/pause"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textFontWeight="2"
@@ -41,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Iterations"
+            android:text="@string/iter"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textFontWeight="2"
@@ -51,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Hang (s)"
+            android:text="@string/hang"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textFontWeight="2"
@@ -61,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Rest (s)"
+            android:text="@string/rest"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textFontWeight="2"
@@ -80,37 +82,110 @@
 
         <NumberPicker
             android:id="@+id/pause_picker"
-            android:layout_weight="1"
+            style="@android:style/Widget.Material.Light.NumberPicker"
+            android:theme="@style/Theme.NumPicker"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center" />
+
         <NumberPicker
             android:id="@+id/iterations_picker"
-            android:layout_weight="1"
+            style="@android:style/Widget.Material.Light.NumberPicker"
+            android:theme="@style/Theme.NumPicker"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center" />
+
         <NumberPicker
             android:id="@+id/hang_picker"
-            android:layout_weight="1"
+            style="@android:style/Widget.Material.Light.NumberPicker"
+            android:theme="@style/Theme.NumPicker"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center" />
+
         <NumberPicker
             android:id="@+id/rest_picker"
-            android:layout_weight="1"
+            style="@android:style/Widget.Material.Light.NumberPicker"
+            android:theme="@style/Theme.NumPicker"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center" />
     </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+        android:layout_width="386dp"
+        android:layout_height="8dp"
         android:layout_marginTop="50dp"
-        android:progressDrawable="@color/teal_700"
+        android:indeterminate="false"
+        android:max="100"
+        android:min="0"
+        android:mirrorForRtl="true"
+        android:progress="0"
+        android:progressTint="#636363"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pickers"/>
+        app:layout_constraintTop_toBottomOf="@+id/pickers"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/text_displays"
+        android:layout_width="408dp"
+        android:layout_height="342dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/st_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progress_bar">
+
+        <TextView
+            android:id="@+id/current_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textDirection="ltr"
+            android:textFontWeight="10"
+            android:textIsSelectable="false"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/current_time_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textDirection="ltr"
+            android:textFontWeight="10"
+            android:textIsSelectable="false"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
