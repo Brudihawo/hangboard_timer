@@ -43,7 +43,6 @@ public class TimerThread extends Thread {
     public void run() {
         float max = progress_bar.getMax();
         while (true) {
-            // FIXME: IllegalMonitorStateException caused by timer.wait(long milliseconds)
             switch (state) {
                 case 0: // Rest
                     Log.d("TimerThread", "Switching to State 0");
