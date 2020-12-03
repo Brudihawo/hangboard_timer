@@ -1,7 +1,6 @@
 # Hangboard Timer App for Android devices
 
 ## TODO
-- Improve UI Readability
-- Implement progress bar
+- Implement save instance state
 - Implement landscape mode
 - Implement stretching mode

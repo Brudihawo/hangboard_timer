@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         minutes_pause = 1;
         seconds_hang = 7;
         seconds_rest = 5;
-        n_iterations = 3;
+        n_iterations = 6;
 
         running = false;
 
@@ -82,12 +82,19 @@ public class MainActivity extends AppCompatActivity {
                         p.setEnabled(true);
                     }
                 } else {
-                    st_button.setText("Stop");
-                    timer_thread = new TimerThread(hang_picker, rest_picker, pause_picker, iter_picker, progress_bar, current_task, current_time_left);
-                    timer_thread.start();
-                    running = true;
-                    for (NumberPicker p : new NumberPicker[]{hang_picker, rest_picker, pause_picker, iter_picker}) {
-                        p.setEnabled(false);
+                    if ((hang_picker.getValue() > 0) || (rest_picker.getValue()> 0) || (pause_picker.getValue() > 0)) {
+                        st_button.setText("Stop");
+                        timer_thread = new TimerThread(hang_picker, rest_picker, pause_picker, iter_picker, progress_bar, current_task, current_time_left);
+                        timer_thread.start();
+                        running = true;
+                        for (NumberPicker p : new NumberPicker[]{hang_picker, rest_picker, pause_picker, iter_picker}) {
+                            p.setEnabled(false);
+                        }
+                    } else {
+                        View view = findViewById(R.id.st_button);
+                        Snackbar snackbar = Snackbar.make(view, "Invalid Time Values", Snackbar.LENGTH_LONG);
+                        snackbar.setAction("OK", v1 -> snackbar.dismiss());
+                        snackbar.show();
                     }
                 }
             }
