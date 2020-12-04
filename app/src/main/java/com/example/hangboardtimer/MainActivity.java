@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     boolean running;
 
     NumberPicker pause_picker, rest_picker, hang_picker, iter_picker;
+    NumberPicker[] pickers;
 
     Button st_button;
     TimerThread timer_thread;
@@ -70,29 +71,33 @@ public class MainActivity extends AppCompatActivity {
         pause_picker.setValue(minutes_pause);
         iter_picker.setValue(n_iterations);
 
+        pickers = new NumberPicker[] {hang_picker, iter_picker, rest_picker, pause_picker};
 
-        NumberPicker.OnScrollListener scroll_listener = (view, scrollState) -> {
-            get_total_duration(hang_picker, rest_picker, iter_picker, pause_picker);
+        duration_preview.setText(get_total_duration(hang_picker, rest_picker, iter_picker, pause_picker));
 
-        };
-
-        hang_picker.setOnScrollListener(scroll_listener);
+        NumberPicker.OnScrollListener scroll_listener = (view, scrollState) -> duration_preview.setText(get_total_duration(hang_picker, rest_picker, iter_picker, pause_picker));
+        for (NumberPicker picker : pickers) {
+            picker.setOnScrollListener(scroll_listener);
+        }
 
         st_button.setOnClickListener(v -> {
             if (running) {
                 st_button.setText(getText(R.string.start));
                 timer_thread.interrupt();
                 running = false;
-                for (NumberPicker p : new NumberPicker[]{hang_picker, rest_picker, pause_picker, iter_picker}) {
+                for (NumberPicker p : pickers) {
                     p.setEnabled(true);
                 }
+                current_time_left.setText("");
+                current_task.setText("");
+                progress_bar.setProgress(0, true);
             } else {
                 if ((hang_picker.getValue() > 0) || (rest_picker.getValue()> 0) || (pause_picker.getValue() > 0)) {
                     st_button.setText(getText(R.string.stop));
                     timer_thread = new TimerThread(hang_picker, rest_picker, pause_picker, iter_picker, progress_bar, current_task, current_time_left, context);
                     timer_thread.start();
                     running = true;
-                    for (NumberPicker p : new NumberPicker[]{hang_picker, rest_picker, pause_picker, iter_picker}) {
+                    for (NumberPicker p : pickers) {
                         p.setEnabled(false);
                     }
                 } else {

@@ -14,9 +14,9 @@
     <string name="rest_descr">REST</string>
     <string name="pause_descr">PAUSE</string>
 
-    <string name="time_left_pause">%d MIN %d S</string>
+    <string name="time_left_pause">%d MIN %02d S</string>
     <string name="time_left_rest_hang">%d S</string>
 
-    <string name="total_set_time">%d:%d min</string>
+    <string name="total_set_time"><b>Set Duration:</b> \n%d:%02d min</string>
 
 </resources>

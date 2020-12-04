@@ -134,6 +134,8 @@
         android:layout_marginEnd="32dp"
         android:foregroundGravity="center_vertical"
         android:foregroundTint="#FFFFFF"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/text_displays"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
