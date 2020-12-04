@@ -1,6 +1,7 @@
 package com.example.hangboardtimer;
 
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.MediaStore;
@@ -9,6 +10,8 @@ import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.content.Context;
+
+import androidx.annotation.RequiresApi;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -41,10 +44,11 @@ public class TimerThread extends Thread {
         this.time_left = time_left;
         this.context = context;
         this.state = 0; // Initialise exercise on rest
-        this.update_frequency = 120;
+        this.update_frequency = 120; // in Hz
         progress_bar.setProgress(0);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void run() {
         float max;
@@ -57,6 +61,7 @@ public class TimerThread extends Thread {
                     Log.d("TimerThread", "Switching to State 0");
                     text_display.post(()-> text_display.setText(R.string.rest_descr));
                     time_left.post(()-> time_left.setText(context.getString(R.string.time_left_rest_hang, (seconds_rest))));
+                    vibrate_sound_change(vibrator);
                     for (int i = seconds_rest * update_frequency; i > 1; i--) {
                         if (this.isInterrupted()) {
                             return;
@@ -71,7 +76,9 @@ public class TimerThread extends Thread {
                                 //changeValueByOne(rest_picker, false);
                                 int finalI = i;
                                 time_left.post(()-> time_left.setText(context.getString(R.string.time_left_rest_hang, (finalI / update_frequency) - 1)));
-                                vibrate_sound(vibrator, i);
+                                if(i < update_frequency * seconds_rest && i > 2) {
+                                    vibrate_sound_during(vibrator);
+                                }
                             }
                             if (i % seconds_rest == 0) {
                                 progress_bar.setProgress((int)(max - i), true);
@@ -89,6 +96,7 @@ public class TimerThread extends Thread {
                     Log.d("TimerThread", "Switching to State 1");
                     text_display.post(()->text_display.setText(R.string.hang_descr));
                     time_left.post(()-> time_left.setText(context.getString(R.string.time_left_rest_hang, (seconds_hang))));
+                    vibrate_sound_change(vibrator);
                     for (int i = seconds_hang * update_frequency; i > 1; i--) {
                         if (this.isInterrupted()) {
                             return;
@@ -103,7 +111,9 @@ public class TimerThread extends Thread {
                                 //changeValueByOne(hang_picker, false);
                                 int finalI = i;
                                 time_left.post(() -> time_left.setText(context.getString(R.string.time_left_rest_hang, (finalI / update_frequency) - 1)));
-                                vibrate_sound(vibrator, i);
+                                if(i < update_frequency * seconds_hang && i > 2) {
+                                    vibrate_sound_during(vibrator);
+                                }
                             }
                             if (i % seconds_hang == 0) {
                                 progress_bar.setProgress((int) (max - i), true);
@@ -128,6 +138,7 @@ public class TimerThread extends Thread {
                     Log.d("TimerThread", "Switching to State 2");
                     time_left.post(() -> time_left.setText(context.getString(R.string.time_left_pause, minutes_pause, 0)));
                     text_display.post(()->text_display.setText(R.string.pause_descr));
+                    vibrate_sound_change(vibrator);
                     for (int i = minutes_pause * 60 * update_frequency; i > 1; i--) {
                         if (this.isInterrupted()) {
                             return;
@@ -169,14 +180,15 @@ public class TimerThread extends Thread {
         media_player.start();
     }
 
-    void vibrate_sound(Vibrator vibrator, int i) {
-        if (i < update_frequency * 2) {
-            vibrator.vibrate(VibrationEffect.createOneShot(100, 255));
-            play_res(R.raw.beep_high);
-        } else if (i < update_frequency * 10) {
-            vibrator.vibrate(VibrationEffect.createOneShot(75, 128));
-            play_res(R.raw.beep_low);
-        }
+    void vibrate_sound_change(Vibrator vibrator) {
+        vibrator.vibrate(VibrationEffect.createWaveform(new long[]{75, 75, 75}, new int[]{255, 0, 255}, -1));
+        play_res(R.raw.beep_high);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    void vibrate_sound_during(Vibrator vibrator) {
+        vibrator.vibrate(VibrationEffect.createOneShot(100, 255));
+        play_res(R.raw.beep_low);
     }
 
     void changeValueByOne(final NumberPicker np, final boolean increment) {

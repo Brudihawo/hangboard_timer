@@ -5,3 +5,4 @@
 - Implement stretching mode
 - Implement secondary progress (for total set duration)
 - Implement settings screen
+- Fix Top Bar Color Bug
