@@ -1,7 +1,9 @@
 package com.example.hangboardtimer;
 
+import android.media.MediaPlayer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
@@ -17,6 +19,7 @@ public class TimerThread extends Thread {
     Context context;
 
     int update_frequency;
+    protected MediaPlayer media_player;
 
     TimerThread(NumberPicker hang_picker, NumberPicker rest_picker,
                 NumberPicker pause_picker, NumberPicker iter_picker,
@@ -67,6 +70,7 @@ public class TimerThread extends Thread {
                                 time_left.post(()-> time_left.setText(context.getString(R.string.time_left_rest_hang, (finalI / update_frequency) - 1)));
                                 if (i < update_frequency * 10) {
                                     vibrator.vibrate(VibrationEffect.createOneShot(100, 128));
+                                    play_res(R.raw.beep_low);
                                 }
                             }
                             progress_bar.setProgress((int) (max - max * i / (seconds_rest * update_frequency)), true);
@@ -98,6 +102,7 @@ public class TimerThread extends Thread {
                                 time_left.post(()-> time_left.setText(context.getString(R.string.time_left_rest_hang, (finalI / update_frequency) - 1)));
                                 if (i < update_frequency * 10) {
                                     vibrator.vibrate(VibrationEffect.createOneShot(100, 128));
+                                    play_res(R.raw.beep_high);
                                 }
                             }
                             progress_bar.setProgress((int)(max - i * max / (float)(seconds_hang * update_frequency)), true);
@@ -152,5 +157,13 @@ public class TimerThread extends Thread {
         rest_picker.setValue(seconds_rest);
         pause_picker.setValue(minutes_pause);
         iter_picker.setValue(n_iterations);
+    }
+
+    public void play_res(int resId) {
+        if (media_player != null) {
+            media_player.reset();
+        }
+        media_player = MediaPlayer.create(context, resId);
+        media_player.start();
     }
 }
