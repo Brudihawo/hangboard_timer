@@ -1,5 +1,7 @@
 package com.example.hangboardtimer;
 
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
@@ -41,6 +43,7 @@ public class TimerThread extends Thread {
     @Override
     public void run() {
         float max = progress_bar.getMax();
+        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         while (true) {
             switch (state) {
                 case 0: // Rest
@@ -62,6 +65,9 @@ public class TimerThread extends Thread {
                                 rest_picker.setValue(rest_picker.getValue() - 1);
                                 int finalI = i;
                                 time_left.post(()-> time_left.setText(context.getString(R.string.time_left_rest_hang, (finalI / update_frequency) - 1)));
+                                if (i < update_frequency * 10) {
+                                    vibrator.vibrate(VibrationEffect.createOneShot(100, 128));
+                                }
                             }
                             progress_bar.setProgress((int) (max - max * i / (seconds_rest * update_frequency)), true);
                         }
@@ -90,6 +96,9 @@ public class TimerThread extends Thread {
                                 hang_picker.setValue(hang_picker.getValue() - 1);
                                 int finalI = i;
                                 time_left.post(()-> time_left.setText(context.getString(R.string.time_left_rest_hang, (finalI / update_frequency) - 1)));
+                                if (i < update_frequency * 10) {
+                                    vibrator.vibrate(VibrationEffect.createOneShot(100, 128));
+                                }
                             }
                             progress_bar.setProgress((int)(max - i * max / (float)(seconds_hang * update_frequency)), true);
                         }
