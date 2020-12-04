@@ -7,5 +7,16 @@
     <string name="hang">Hang (s)</string>
     <string name="pause">Pause (min)</string>
     <string name="iter">Iterations</string>
+    <string name="start">START</string>
+    <string name="stop">STOP</string>
+
+    <string name="hang_descr">HANG</string>
+    <string name="rest_descr">REST</string>
+    <string name="pause_descr">PAUSE</string>
+
+    <string name="time_left_pause">%d MIN %d S</string>
+    <string name="time_left_rest_hang">%d S</string>
+
+    <string name="total_set_time">%d:%d min</string>
 
 </resources>

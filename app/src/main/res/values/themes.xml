@@ -28,4 +28,11 @@
         <item name="android:textFontWeight"><![CDATA[20]]></item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="ProgressBarStyle" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:progressTint">#a8a8a8</item>
+        <item name="android:progressBackgroundTint">#232323</item>
+        <item name="android:alpha">80</item>
+        <item name="android:minHeight">12dp</item>
+    </style>
 </resources>
