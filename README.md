@@ -1,4 +1,7 @@
 # Hangboard Timer App for Android devices
+Version 1.0 is up and running :)
+
+---
 
 ## TODO
 - Implement landscape mode - locked in portrait for now
